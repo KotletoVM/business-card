@@ -1,0 +1,35 @@
+@import url('./_normalize.scss');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap');
+
+html {
+  font-family: 'Raleway', sans-serif;
+  height: 100%;
+  body {
+    overflow: hidden;
+    height: 100%;
+    #root {
+      height: 100%;
+      .App {
+        height: 100%;
+      }
+    }
+  }
+}
+
+body {
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.App {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-rows: 500px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 50px;
+  gap: 0px 0px;
+  grid-template-areas:
+    '.'
+    '.';
+}

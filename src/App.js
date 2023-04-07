@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
-
+import './scss/app.scss';
+import { Canvas } from '@react-three/fiber';
+import { Suspense } from 'react';
+import { Environment, PresentationControls } from '@react-three/drei';
+import { BusinessCard } from './components/gltfs/BusinessCard';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Canvas camera={{ position: [0, -0.2, 1.4], fov: 30 }}>
+        <Suspense fallback={null}>
+          <Environment preset="sunset" />
+          <PresentationControls
+            snap
+            global
+            zoom={0.9}
+            speed={2}
+            polar={[-Math.PI / 5, Math.PI / 4]}
+            azimuth={[-Math.PI / 5, Math.PI / 5]}
+            config={{ mass: 0.1, tension: 170, friction: 20 }}>
+            <BusinessCard />
+          </PresentationControls>
+        </Suspense>
+      </Canvas>
     </div>
   );
 }
