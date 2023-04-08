@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AccumulativeShadows, RandomizedLight, useBounds, useGLTF } from '@react-three/drei';
+import { useBounds, useGLTF } from '@react-three/drei';
 import { a, useSpring } from '@react-spring/three';
 export function BusinessCard({ camSettings, setCamSettings, canvasRef }) {
   const [onFront, setOnFront] = useState(false);
@@ -33,40 +33,49 @@ export function BusinessCard({ camSettings, setCamSettings, canvasRef }) {
   }
 
   return (
-    <a.group dispose={null} {...cardSpring}>
-      <mesh
-        onClick={(e) => onMeshClick(e)}
-        geometry={nodes.Cube_low_1.geometry}
-        material={materials.DefaultMaterial}
-        castShadow
-      />
-      <mesh position={[-0.315, -0.21, 0.01]} onClick={(e) => onLinkClick(e, 'tel:89219260207')}>
-        <boxGeometry args={[0.18, 0.04, 0.01]} />
-        <meshPhongMaterial color="#ff0000" opacity={0} transparent />
-      </mesh>
-      <mesh
-        position={[0.27, -0.21, 0.01]}
-        onClick={(e) => onLinkClick(e, 'mailto:vash.lavashik@gmail.com')}>
-        <boxGeometry args={[0.28, 0.04, 0.01]} />
-        <meshPhongMaterial color="#00ff00" opacity={0} transparent />
-      </mesh>
-      <mesh
-        position={[0.21, -0.21, -0.01]}
-        onClick={(e) => onLinkClick(e, 'https://github.com/KotletoVM')}>
-        <boxGeometry args={[0.38, 0.04, 0.01]} />
-        <meshPhongMaterial color="#00ff00" opacity={0} transparent />
-      </mesh>
-      <mesh
-        position={[-0.25, -0.21, -0.01]}
-        onClick={(e) => onLinkClick(e, 'https://t.me/kotlet_spb')}>
-        <boxGeometry args={[0.3, 0.04, 0.01]} />
-        <meshPhongMaterial color="#ff0000" opacity={0} transparent />
-      </mesh>
-      <AccumulativeShadows
+    <>
+      <a.group dispose={null} {...cardSpring}>
+        <mesh
+          onClick={(e) => onMeshClick(e)}
+          geometry={nodes.Cube_low_1.geometry}
+          material={materials.DefaultMaterial}
+          castShadow
+        />
+        <mesh position={[-0.315, -0.21, 0.01]} onClick={(e) => onLinkClick(e, 'tel:89219260207')}>
+          <boxGeometry args={[0.18, 0.04, 0.01]} />
+          <meshPhongMaterial color="#ff0000" opacity={0} transparent />
+        </mesh>
+        <mesh
+          position={[0.27, -0.21, 0.01]}
+          onClick={(e) => onLinkClick(e, 'mailto:vash.lavashik@gmail.com')}>
+          <boxGeometry args={[0.28, 0.04, 0.01]} />
+          <meshPhongMaterial color="#00ff00" opacity={0} transparent />
+        </mesh>
+        <mesh
+          position={[0.21, -0.21, -0.01]}
+          onClick={(e) => onLinkClick(e, 'https://github.com/KotletoVM')}>
+          <boxGeometry args={[0.38, 0.04, 0.01]} />
+          <meshPhongMaterial color="#00ff00" opacity={0} transparent />
+        </mesh>
+        <mesh
+          position={[-0.25, -0.21, -0.01]}
+          onClick={(e) => onLinkClick(e, 'https://t.me/kotlet_spb')}>
+          <boxGeometry args={[0.3, 0.04, 0.01]} />
+          <meshPhongMaterial color="#ff0000" opacity={0} transparent />
+        </mesh>
+      </a.group>
+    </>
+  );
+}
+
+useGLTF.preload('/vizitka_remastered.glb');
+
+/*
+<AccumulativeShadows
+        receiveShadow
         position={[0, -0.25, 0]}
-        temporal
         frames={20}
-        color="#a52a2a"
+        color="#5e1c20"
         colorBlend={2}
         toneMapped={true}
         alphaTest={0.9}
@@ -76,7 +85,7 @@ export function BusinessCard({ camSettings, setCamSettings, canvasRef }) {
           radius={4}
           ambient={0.7}
           intensity={1}
-          position={[5, 5, 10]}
+          position={[3, 5, 15]}
           bias={0.001}
         />
         <RandomizedLight
@@ -88,8 +97,4 @@ export function BusinessCard({ camSettings, setCamSettings, canvasRef }) {
           bias={0.001}
         />
       </AccumulativeShadows>
-    </a.group>
-  );
-}
-
-useGLTF.preload('/vizitka_remastered.glb');
+*/
