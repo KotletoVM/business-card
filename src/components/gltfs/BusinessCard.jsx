@@ -1,14 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useBounds, useGLTF } from '@react-three/drei';
 import { a, useSpring } from '@react-spring/three';
-export function BusinessCard({ camSettings, setCamSettings, canvasRef }) {
-  const [onFront, setOnFront] = useState(false);
+import LinkMesh from '../LinkMesh';
+export function BusinessCard({ firstLoad, setFirstLoad, onFront, setOnFront }) {
   const { nodes, materials } = useGLTF('/vizitka_remastered.glb');
   const bounds = useBounds();
+
   const [cardSpring, cardApi] = useSpring(
-    () => ({ 'rotation-y': 0, config: { friction: 50 } }),
+    () => ({
+      'rotation-y': 0,
+      'position-y': 0.016,
+      'rotation-x': -0.1,
+      'position-z': -0.02,
+      config: { friction: 50 },
+    }),
     [],
   );
+
+  function onFrontFromButton() {
+    console.log('onFront');
+    if (!firstLoad) {
+      if (onFront) {
+        bounds.to({ position: [0, 0.25, 1.2], target: [0, 0.25, 0] });
+        cardApi.start({
+          'position-y': 0.25,
+          'rotation-x': 0,
+          'position-z': 0,
+        });
+      } else {
+        bounds.to({ position: [-2, 0.3, 2], target: [0, 0, 0] });
+        cardApi.start({
+          'position-y': 0.016,
+          'rotation-x': -0.1,
+          'position-z': -0.02,
+        });
+      }
+    }
+    setFirstLoad(false);
+  }
+  // eslint-disable-next-line
+  useEffect(onFrontFromButton, [onFront]);
 
   function onMeshClick(e) {
     /*setCamSettings({
@@ -17,54 +48,48 @@ export function BusinessCard({ camSettings, setCamSettings, canvasRef }) {
     });*/
     e.stopPropagation();
     if (onFront) {
-      console.log(cardSpring['rotation-y'].animation.to);
-      cardApi.start({ 'rotation-y': cardSpring['rotation-y'].animation.to ? 0 : Math.PI });
-    } else {
-      e.delta <= 2 && bounds.to({ position: [0, 0, 1.2], target: [0, 0, 0] });
-      setOnFront(!onFront);
-    }
-  }
-
-  function onLinkClick(e, link) {
-    if (onFront) {
-      e.stopPropagation();
-      window.open(link, '_blank');
+      cardApi.start({
+        'rotation-y': cardSpring['rotation-y'].animation.to ? 0 : Math.PI,
+      });
+    } else if (e.delta <= 2) {
+      setOnFront(true);
     }
   }
 
   return (
-    <>
-      <a.group dispose={null} {...cardSpring}>
-        <mesh
-          onClick={(e) => onMeshClick(e)}
-          geometry={nodes.Cube_low_1.geometry}
-          material={materials.DefaultMaterial}
-          castShadow
-        />
-        <mesh position={[-0.315, -0.21, 0.01]} onClick={(e) => onLinkClick(e, 'tel:89219260207')}>
-          <boxGeometry args={[0.18, 0.04, 0.01]} />
-          <meshPhongMaterial color="#ff0000" opacity={0} transparent />
-        </mesh>
-        <mesh
-          position={[0.27, -0.21, 0.01]}
-          onClick={(e) => onLinkClick(e, 'mailto:vash.lavashik@gmail.com')}>
-          <boxGeometry args={[0.28, 0.04, 0.01]} />
-          <meshPhongMaterial color="#00ff00" opacity={0} transparent />
-        </mesh>
-        <mesh
-          position={[0.21, -0.21, -0.01]}
-          onClick={(e) => onLinkClick(e, 'https://github.com/KotletoVM')}>
-          <boxGeometry args={[0.38, 0.04, 0.01]} />
-          <meshPhongMaterial color="#00ff00" opacity={0} transparent />
-        </mesh>
-        <mesh
-          position={[-0.25, -0.21, -0.01]}
-          onClick={(e) => onLinkClick(e, 'https://t.me/kotlet_spb')}>
-          <boxGeometry args={[0.3, 0.04, 0.01]} />
-          <meshPhongMaterial color="#ff0000" opacity={0} transparent />
-        </mesh>
-      </a.group>
-    </>
+    <a.group dispose={null} {...cardSpring} position={[0, 0.018, 0]}>
+      <mesh
+        onClick={(e) => onMeshClick(e)}
+        geometry={nodes.Cube_low_1.geometry}
+        material={materials.DefaultMaterial}
+        castShadow
+        receiveShadow
+      />
+      <LinkMesh
+        position={{ x: -0.315, y: -0.21, z: 0.01 }}
+        args={{ x: 0.18, y: 0.04, z: 0.01 }}
+        link="tel:+79219260207"
+        onFront={onFront}
+      />
+      <LinkMesh
+        position={{ x: 0.27, y: -0.21, z: 0.01 }}
+        args={{ x: 0.28, y: 0.04, z: 0.01 }}
+        link="mailto:vash.lavashik@gmail.com"
+        onFront={onFront}
+      />
+      <LinkMesh
+        position={{ x: 0.21, y: -0.21, z: -0.01 }}
+        args={{ x: 0.38, y: 0.04, z: 0.01 }}
+        link="https://github.com/KotletoVM"
+        onFront={onFront}
+      />
+      <LinkMesh
+        position={{ x: -0.25, y: -0.21, z: -0.01 }}
+        args={{ x: 0.3, y: 0.04, z: 0.01 }}
+        link="https://t.me/kotlet_spb"
+        onFront={onFront}
+      />
+    </a.group>
   );
 }
 

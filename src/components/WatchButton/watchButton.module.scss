@@ -1,0 +1,59 @@
+.button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: none;
+  border: none;
+  padding-bottom: 20px;
+  p {
+    opacity: 0.6;
+    color: white;
+    font-size: 24px;
+    line-height: 24px;
+    margin: 0;
+  }
+  svg {
+    transition: transform 0.1s;
+    opacity: 0.6;
+    .path1 {
+      animation: 1.7s infinite path1opacity;
+    }
+
+    @keyframes path1opacity {
+      26% {
+        opacity: 0.1;
+      }
+      36% {
+        opacity: 0.9;
+      }
+    }
+
+    .path2 {
+      animation: 1.7s infinite path2opacity;
+    }
+
+    @keyframes path2opacity {
+      17% {
+        opacity: 0.1;
+      }
+      27% {
+        opacity: 0.9;
+      }
+    }
+
+    .path3 {
+      animation: 1.7s infinite path3opacity;
+    }
+
+    @keyframes path3opacity {
+      8% {
+        opacity: 0.1;
+      }
+      18% {
+        opacity: 0.9;
+      }
+    }
+  }
+}
