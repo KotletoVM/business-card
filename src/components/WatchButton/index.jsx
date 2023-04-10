@@ -3,7 +3,7 @@ import styles from './watchButton.module.scss';
 
 export default function WatchButton({ onFront, setOnFront }) {
   return (
-    <button className={styles.button} onClick={() => setOnFront(!onFront)}>
+    <button id="button" className={styles.button} onClick={() => setOnFront(!onFront)}>
       <svg
         version="1.1"
         id="Layer_1"
@@ -11,7 +11,6 @@ export default function WatchButton({ onFront, setOnFront }) {
         xlink="http://www.w3.org/1999/xlink"
         x="0px"
         y="0px"
-        height="40px"
         viewBox="0 0 48 48"
         style={{
           enableBackground: 'new 0 0 48 48',

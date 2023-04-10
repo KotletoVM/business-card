@@ -5,11 +5,21 @@ import LinkMesh from '../LinkMesh';
 export function BusinessCard({ firstLoad, setFirstLoad, onFront, setOnFront }) {
   const { nodes, materials } = useGLTF('/vizitka_remastered.glb');
   const bounds = useBounds();
-  const coef = window.innerWidth < window.innerHeight*0.75 ? 1.5 : 3;
-  let positionY =  window.innerWidth < 550 && window.innerWidth < window.innerHeight ? (550 - window.innerWidth)/100 : 0; 
-  useEffect(()=>{
-    bounds.to({ position: [-2, 0.3, 2 + positionY], target: [0, 0, 0] });
-  }, [])
+
+  let widthCorrect =
+    window.innerWidth < 550 && window.innerWidth < window.innerHeight
+      ? (550 - window.innerWidth) / 100
+      : 0;
+
+  let heightCorrect =
+    window.innerWidth * 0.75 < window.innerHeight
+      ? Math.abs(window.innerHeight - window.innerWidth) / 170
+      : 0;
+
+  useEffect(() => {
+    bounds.to({ position: [-2, 0.3, 2 + widthCorrect], target: [0, 0, 0] });
+    // eslint-disable-next-line
+  }, []);
 
   const [cardSpring, cardApi] = useSpring(
     () => ({
@@ -26,14 +36,14 @@ export function BusinessCard({ firstLoad, setFirstLoad, onFront, setOnFront }) {
     console.log('onFront');
     if (!firstLoad) {
       if (onFront) {
-        bounds.to({ position: [0, 0.25, 1.2  + positionY], target: [0, 0.25, 0] });
+        bounds.to({ position: [0, 0.25, 1.2 + heightCorrect], target: [0, 0.25, 0] });
         cardApi.start({
           'position-y': 0.25,
           'rotation-x': 0,
           'position-z': 0,
         });
       } else {
-        bounds.to({ position: [-2, 0.3, 2  + positionY], target: [0, 0, 0] });
+        bounds.to({ position: [-2, 0.3, 2 + widthCorrect], target: [0, 0, 0] });
         cardApi.start({
           'position-y': 0.016,
           'rotation-x': -0.1,
@@ -47,10 +57,6 @@ export function BusinessCard({ firstLoad, setFirstLoad, onFront, setOnFront }) {
   useEffect(onFrontFromButton, [onFront]);
 
   function onMeshClick(e) {
-    /*setCamSettings({
-      ...camSettings,
-      controls: { ...camSettings.controls, polar: [-Math.PI / 10, Math.PI / 10] },
-    });*/
     e.stopPropagation();
     if (onFront) {
       cardApi.start({
@@ -99,32 +105,3 @@ export function BusinessCard({ firstLoad, setFirstLoad, onFront, setOnFront }) {
 }
 
 useGLTF.preload('/vizitka_remastered.glb');
-
-/*
-<AccumulativeShadows
-        receiveShadow
-        position={[0, -0.25, 0]}
-        frames={20}
-        color="#5e1c20"
-        colorBlend={2}
-        toneMapped={true}
-        alphaTest={0.9}
-        opacity={2}>
-        <RandomizedLight
-          amount={8}
-          radius={4}
-          ambient={0.7}
-          intensity={1}
-          position={[3, 5, 15]}
-          bias={0.001}
-        />
-        <RandomizedLight
-          amount={3}
-          radius={6}
-          ambient={1}
-          intensity={0.1}
-          position={[5, 5, -10]}
-          bias={0.001}
-        />
-      </AccumulativeShadows>
-*/

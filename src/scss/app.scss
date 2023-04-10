@@ -17,8 +17,18 @@ html {
 }
 
 body {
-  //background-image: url('../assets/background.jpg');
-  //background-size: cover;
-  //background-position: center;
   background-color: #5e1c20;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  h1 {
+    font-family: 'Miama Nueva';
+    font-size: 50px;
+    color: antiquewhite;
+    margin: 0;
+  }
 }
