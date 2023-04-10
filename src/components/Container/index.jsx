@@ -1,8 +1,8 @@
-import React, { Suspense, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import styles from './container.module.scss';
 import MySpotLight from '../SpotLight';
 import { Canvas } from '@react-three/fiber';
-import { Bounds, PerspectiveCamera, PresentationControls, RoundedBox } from '@react-three/drei';
+import { Bounds, PerspectiveCamera, PresentationControls, RoundedBox, useBounds } from '@react-three/drei';
 import { BusinessCard } from '../gltfs/BusinessCard';
 import { CardHolder } from '../gltfs/CardHolder';
 import WatchButton from '../WatchButton';
@@ -42,7 +42,7 @@ export default function Container() {
             polar={camSettings.controls.polar}
             azimuth={camSettings.controls.azimuth}
             config={{ mass: 0.1, tension: 170, friction: 20 }}>
-            <Bounds fit clip observe margin={1.6}>
+            <Bounds observe margin={1.6}>
               <BusinessCard
                 firstLoad={firstLoad}
                 setFirstLoad={setFirstLoad}

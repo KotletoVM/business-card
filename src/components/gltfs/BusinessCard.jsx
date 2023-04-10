@@ -5,6 +5,11 @@ import LinkMesh from '../LinkMesh';
 export function BusinessCard({ firstLoad, setFirstLoad, onFront, setOnFront }) {
   const { nodes, materials } = useGLTF('/vizitka_remastered.glb');
   const bounds = useBounds();
+  const coef = window.innerWidth < window.innerHeight*0.75 ? 1.5 : 3;
+  let positionY =  window.innerWidth < 550 && window.innerWidth < window.innerHeight ? (550 - window.innerWidth)/100 : 0; 
+  useEffect(()=>{
+    bounds.to({ position: [-2, 0.3, 2 + positionY], target: [0, 0, 0] });
+  }, [])
 
   const [cardSpring, cardApi] = useSpring(
     () => ({
@@ -21,14 +26,14 @@ export function BusinessCard({ firstLoad, setFirstLoad, onFront, setOnFront }) {
     console.log('onFront');
     if (!firstLoad) {
       if (onFront) {
-        bounds.to({ position: [0, 0.25, 1.2], target: [0, 0.25, 0] });
+        bounds.to({ position: [0, 0.25, 1.2  + positionY], target: [0, 0.25, 0] });
         cardApi.start({
           'position-y': 0.25,
           'rotation-x': 0,
           'position-z': 0,
         });
       } else {
-        bounds.to({ position: [-2, 0.3, 2], target: [0, 0, 0] });
+        bounds.to({ position: [-2, 0.3, 2  + positionY], target: [0, 0, 0] });
         cardApi.start({
           'position-y': 0.016,
           'rotation-x': -0.1,
