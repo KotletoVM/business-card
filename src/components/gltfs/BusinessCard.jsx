@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { useBounds, useGLTF } from '@react-three/drei';
 import { a, useSpring } from '@react-spring/three';
 import LinkMesh from '../LinkMesh';
+import vizitka from '../../assets/vizitka_remastered.glb';
 export function BusinessCard({ firstLoad, setFirstLoad, onFront, setOnFront }) {
-  const { nodes, materials } = useGLTF('/vizitka_remastered.glb');
+  const { nodes, materials } = useGLTF(vizitka);
   const bounds = useBounds();
 
   let widthCorrect =
