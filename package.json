@@ -1,6 +1,7 @@
 {
   "name": "business-card",
   "version": "0.1.0",
+  "homepage": "/business-card",
   "private": true,
   "dependencies": {
     "@react-spring/three": "^9.7.2",
